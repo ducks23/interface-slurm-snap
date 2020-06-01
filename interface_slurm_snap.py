@@ -56,6 +56,7 @@ class SlurmSnapOps(Object):
         #installs from the snap store
         else:
             cmd.append("slurm")
+            cmd.append("--edge")
 
         subprocess.call(cmd)
         subprocess.call(["snap", "connect", "slurm:network-control"])
@@ -90,9 +91,6 @@ class SlurmSnapOps(Object):
 
 
     def set_slurm_snap_mode(self, snap_mode):
-        subprocess.call(["snap", "set", "slurm", snap_mode])
-
-def resource_get(resource_name:str) -> str:
-    result = subprocess.check_output(['resource-get', resource_name])
-    return result.decode().strip()
+        command = f"snap.mode={snapmode}"
+        subprocess.call(["snap", "set", "slurm", command])
 
